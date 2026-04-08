@@ -325,10 +325,10 @@ export default function Services() {
                   WhatsApp Us Now
                 </Link>
                 <Link
-                  href="/pricing"
+                  href="/contact"
                   className="border-2 border-white/30 text-white font-semibold px-8 py-3.5 rounded-full text-base hover:bg-white/10 transition-colors"
                 >
-                  View Packages
+                  Contact Us
                 </Link>
               </div>
             </div>

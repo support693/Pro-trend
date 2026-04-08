@@ -126,10 +126,10 @@ export default function Home() {
                   </svg>
                 </Link>
                 <Link
-                  href="/pricing"
+                  href="/services"
                   className="text-gray-600 hover:text-purple font-medium px-8 py-3.5 rounded-full text-base transition-colors border border-gray-200 hover:border-purple/30"
                 >
-                  View Our Packages
+                  View Our Services
                 </Link>
               </div>
             </ScrollAnimate>
