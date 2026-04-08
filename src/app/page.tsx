@@ -201,7 +201,7 @@ export default function Home() {
             {steps.map((step, i) => (
               <div key={step.num} className="flex items-center">
                 <ScrollAnimate animation="fade-up" delay={i * 200}>
-                  <div className="floating-card p-8 text-center transition-all duration-300 group w-[280px]">
+                  <div className="floating-card p-8 text-center transition-all duration-300 group w-full md:w-[280px]">
                     <div className="w-14 h-14 gradient-btn rounded-2xl flex items-center justify-center mx-auto mb-5 text-white font-bold text-lg group-hover:scale-110 transition-transform">
                       {step.num}
                     </div>
@@ -299,25 +299,25 @@ export default function Home() {
 
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <ScrollAnimate animation="fade-right">
-              <div className="floating-card overflow-hidden rounded-2xl relative min-h-[320px] flex">
-                {/* Left text side */}
-                <div className="relative z-10 p-8 flex flex-col justify-center w-[45%]">
-                  <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Krithika T</h3>
-                  <p className="text-purple text-base font-semibold mb-5">CEO &amp; Founder</p>
-                  <blockquote className="text-gray-600 italic leading-relaxed text-base">
-                    &ldquo;We don&apos;t just run campaigns &mdash; we build brands that grow.&rdquo;
-                  </blockquote>
-                </div>
-                {/* Right image side */}
-                <div className="absolute right-0 top-0 bottom-0 w-[60%]">
+              <div className="floating-card overflow-hidden rounded-2xl relative min-h-[280px] md:min-h-[320px] flex flex-col md:flex-row">
+                {/* Image side - on top for mobile */}
+                <div className="relative w-full h-[200px] md:absolute md:right-0 md:top-0 md:bottom-0 md:w-[60%] md:h-auto">
                   <Image
                     src="/krithika.jpg"
                     alt="Krithika T - CEO & Founder"
                     fill
                     className="object-cover object-[70%_20%]"
                   />
-                  {/* Narrow gradient only on the left edge so face stays clear */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-white via-white/30 via-[30%] to-transparent" />
+                  {/* Gradient: bottom fade on mobile, left fade on desktop */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-white via-white/30 via-[30%] to-transparent md:bg-gradient-to-r md:from-white md:via-white/30 md:via-[30%] md:to-transparent" />
+                </div>
+                {/* Text side */}
+                <div className="relative z-10 p-6 md:p-8 flex flex-col justify-center w-full md:w-[45%]">
+                  <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Krithika T</h3>
+                  <p className="text-purple text-base font-semibold mb-5">CEO &amp; Founder</p>
+                  <blockquote className="text-gray-600 italic leading-relaxed text-base">
+                    &ldquo;We don&apos;t just run campaigns &mdash; we build brands that grow.&rdquo;
+                  </blockquote>
                 </div>
               </div>
             </ScrollAnimate>
@@ -373,7 +373,7 @@ export default function Home() {
             ))}
           </div>
           {/* Bottom row - 3 logos centered */}
-          <div className="grid grid-cols-3 gap-5 max-w-[75%] mx-auto mt-5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-5 max-w-full sm:max-w-[75%] mx-auto mt-5">
             {clients.slice(4).map((c, i) => (
               <ScrollAnimate key={c.name} animation="zoom-in" delay={400 + i * 100}>
                 <div className={`floating-card p-5 flex items-center justify-center transition-all duration-300 h-[120px] rounded-2xl ${c.darkBg ? "!bg-black !border-gray-800" : ""}`}>

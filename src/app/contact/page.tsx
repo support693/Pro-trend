@@ -106,26 +106,27 @@ export default function Contact() {
       <section className="pb-20 px-4">
         <div className="max-w-5xl mx-auto">
           <ScrollAnimate animation="fade-up">
-            <div className="floating-card overflow-hidden rounded-2xl relative min-h-[320px] flex">
-              <div className="relative z-10 p-8 md:p-10 flex flex-col justify-center w-[50%]">
-                <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Krithika T</h3>
-                <p className="text-purple text-base font-semibold mb-5">CEO &amp; Founder</p>
-                <blockquote className="text-gray-600 italic leading-relaxed text-base mb-6">
-                  &ldquo;We don&apos;t just run campaigns &mdash; we build brands that grow.&rdquo;
-                </blockquote>
-                <div className="flex gap-3 text-sm text-gray-500">
-                  <span className="bg-gray-100 px-3 py-1 rounded-full">50+ Clients</span>
-                  <span className="bg-gray-100 px-3 py-1 rounded-full">100% Result Focused</span>
-                </div>
-              </div>
-              <div className="absolute right-0 top-0 bottom-0 w-[55%]">
+            <div className="floating-card overflow-hidden rounded-2xl relative min-h-[280px] md:min-h-[320px] flex flex-col md:flex-row">
+              {/* Image - on top for mobile */}
+              <div className="relative w-full h-[200px] md:absolute md:right-0 md:top-0 md:bottom-0 md:w-[55%] md:h-auto">
                 <Image
                   src="/krithika.jpg"
                   alt="Krithika T - CEO & Founder"
                   fill
                   className="object-cover object-[70%_20%]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-white via-white/30 via-[30%] to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-white via-white/30 via-[30%] to-transparent md:bg-gradient-to-r md:from-white md:via-white/30 md:via-[30%] md:to-transparent" />
+              </div>
+              <div className="relative z-10 p-6 md:p-10 flex flex-col justify-center w-full md:w-[50%]">
+                <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Krithika T</h3>
+                <p className="text-purple text-base font-semibold mb-5">CEO &amp; Founder</p>
+                <blockquote className="text-gray-600 italic leading-relaxed text-base mb-6">
+                  &ldquo;We don&apos;t just run campaigns &mdash; we build brands that grow.&rdquo;
+                </blockquote>
+                <div className="flex flex-wrap gap-3 text-sm text-gray-500">
+                  <span className="bg-gray-100 px-3 py-1 rounded-full">50+ Clients</span>
+                  <span className="bg-gray-100 px-3 py-1 rounded-full">100% Result Focused</span>
+                </div>
               </div>
             </div>
           </ScrollAnimate>

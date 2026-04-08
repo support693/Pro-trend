@@ -54,7 +54,7 @@ export default function Navbar() {
 
       {/* Mobile menu overlay */}
       {menuOpen && (
-        <div className="md:hidden fixed inset-0 top-20 bg-white/95 backdrop-blur-md flex flex-col items-center justify-start pt-16 gap-8 text-lg z-40">
+        <div className="md:hidden fixed inset-0 top-[72px] bg-white/95 backdrop-blur-md flex flex-col items-center justify-start pt-12 gap-8 text-lg z-40">
           <Link href="/" onClick={() => setMenuOpen(false)} className="text-purple font-medium">Home</Link>
           <Link href="/services" onClick={() => setMenuOpen(false)} className="text-gray-600 hover:text-purple">Services</Link>
           <Link href="/pricing" onClick={() => setMenuOpen(false)} className="text-gray-600 hover:text-purple">Pricing</Link>
