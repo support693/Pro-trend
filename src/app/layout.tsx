@@ -11,6 +11,10 @@ export const metadata: Metadata = {
   title: "Pro Trend — 21st Century's Best Growth Partner",
   description:
     "Performance-driven digital marketing agency. SEO, Social Media, Content Creation & Google Ads to scale your brand.",
+  icons: {
+    icon: "/logo-icon.png",
+    apple: "/logo-icon.png",
+  },
 };
 
 export default function RootLayout({
