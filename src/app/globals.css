@@ -1,26 +1,89 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --purple: #7B2FBE;
+  --purple-dark: #5A1E96;
+  --teal: #00C9A7;
+  --teal-dark: #00A88A;
+  --green: #4ADE80;
+  --blue: #3B82F6;
+  --gradient: linear-gradient(135deg, #7B2FBE, #00C9A7);
+  --gradient-light: linear-gradient(135deg, rgba(123, 47, 190, 0.08), rgba(0, 201, 167, 0.08));
+  --gradient-btn: linear-gradient(135deg, #7B2FBE, #00C9A7);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-purple: var(--purple);
+  --color-purple-dark: var(--purple-dark);
+  --color-teal: var(--teal);
+  --color-teal-dark: var(--teal-dark);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: #ffffff;
+  color: #1a1a2e;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #7B2FBE, #00C9A7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-btn {
+  background: linear-gradient(135deg, #7B2FBE, #00C9A7);
+}
+
+.gradient-btn:hover {
+  background: linear-gradient(135deg, #5A1E96, #00A88A);
+}
+
+.gradient-border {
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, #7B2FBE, #00C9A7);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+@keyframes marquee {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+
+.animate-marquee {
+  display: inline-flex;
+  animation: marquee 15s linear infinite;
+  will-change: transform;
+}
+
+.floating-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.floating-card:hover {
+  box-shadow: 0 8px 32px rgba(123, 47, 190, 0.1), 0 2px 8px rgba(0, 0, 0, 0.04);
+  border-color: rgba(123, 47, 190, 0.15);
 }
