@@ -8,7 +8,18 @@ import Navbar from "@/components/Navbar";
 /* ─── Data ─────────────────────────────────────────────── */
 
 const reelsData = [
-  { client: "Pro Trend Reel", videoId: "sCONGS2eHhk" },
+  { client: "Pro Trend Reel 1",  videoId: "sCONGS2eHhk"   },
+  { client: "Pro Trend Reel 2",  videoId: "OC4FQT3pPeU"   },
+  { client: "Pro Trend Reel 3",  videoId: "UxIKCYzsK2Q"   },
+  { client: "Pro Trend Reel 4",  videoId: "sPUP2bzdrdU"   },
+  { client: "Pro Trend Reel 5",  videoId: "NGk2_3Md9c0"   },
+  { client: "Pro Trend Reel 6",  videoId: "E3tG1vslhhU"   },
+  { client: "Pro Trend Reel 7",  videoId: "QT1qn_kiV6s"   },
+  { client: "Pro Trend Reel 8",  videoId: "5hAhAcJ2YW0"   },
+  { client: "Pro Trend Reel 9",  videoId: "xNT3Px92H5w"   },
+  { client: "Pro Trend Reel 10", videoId: "t_Yodrr_444"   },
+  { client: "Pro Trend Reel 11", videoId: "xsUcxJ6t25I"   },
+  { client: "Pro Trend Reel 12", videoId: "CIV2rMfof2k"   },
 ];
 
 const podcastsData = [
