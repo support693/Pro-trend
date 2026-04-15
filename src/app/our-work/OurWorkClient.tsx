@@ -224,7 +224,7 @@ function CarouselCard({ item }: { item: (typeof carouselData)[0] }) {
     <div className="group relative rounded-2xl overflow-hidden w-full">
       <div
         className="relative w-full"
-        style={{ paddingBottom: "100%" }}
+        style={{ paddingBottom: "125%" }}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
@@ -369,7 +369,10 @@ export default function OurWorkClient() {
                   </svg>
                 }
               />
-              <div className="flex overflow-x-auto snap-x snap-mandatory gap-5 pb-3 -mx-4 px-4 scrollbar-hide">
+              <div
+                className="flex overflow-x-auto snap-x snap-mandatory gap-5 pb-3 -mx-4 px-4 scrollbar-hide"
+                style={{ touchAction: "pan-x" }}
+              >
                 {reelsData.map((item, i) => (
                   <div key={i} className="snap-start shrink-0 w-[220px] sm:w-[260px]">
                     <ReelCard item={item} />
@@ -391,7 +394,10 @@ export default function OurWorkClient() {
                   </svg>
                 }
               />
-              <div className="flex overflow-x-auto snap-x snap-mandatory gap-5 pb-3 -mx-4 px-4 scrollbar-hide">
+              <div
+                className="flex overflow-x-auto snap-x snap-mandatory gap-5 pb-3 -mx-4 px-4 scrollbar-hide"
+                style={{ touchAction: "pan-x" }}
+              >
                 {podcastsData.map((item, i) => (
                   <div key={i} className="snap-start shrink-0 w-[85vw] sm:w-[480px] lg:w-[560px]">
                     <PodcastCard item={item} />
