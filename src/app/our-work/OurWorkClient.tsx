@@ -69,20 +69,44 @@ function SectionHeading({ icon, label, accent }: { icon: React.ReactNode; label:
 /* ─── Reel card — 9:16 YouTube Short ───────────────────── */
 
 function ReelCard({ item }: { item: (typeof reelsData)[0] }) {
+  const [playing, setPlaying] = useState(false);
   return (
-    <div className="relative rounded-2xl overflow-hidden w-full">
+    <div className="relative rounded-2xl overflow-hidden w-full shadow-md">
       <div className="relative w-full" style={{ paddingBottom: "177.78%" }}>
-        <iframe
-          src={`https://www.youtube.com/embed/${item.videoId}?rel=0`}
-          title={item.client}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          className="absolute inset-0 w-full h-full"
-        />
-      </div>
-      <div className="p-2.5">
-        <span className="inline-block text-[9px] font-semibold px-2 py-0.5 rounded-full mb-1 bg-purple-100 text-purple-700">Reel</span>
-        <p className="text-xs font-semibold text-gray-800 truncate">{item.client}</p>
+        {playing ? (
+          <iframe
+            src={`https://www.youtube.com/embed/${item.videoId}?autoplay=1&rel=0`}
+            title={item.client}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="absolute inset-0 w-full h-full"
+          />
+        ) : (
+          <button
+            onClick={() => setPlaying(true)}
+            className="absolute inset-0 w-full h-full group"
+          >
+            {/* HD thumbnail */}
+            <img
+              src={`https://img.youtube.com/vi/${item.videoId}/maxresdefault.jpg`}
+              alt={item.client}
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            {/* Play button */}
+            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/35 transition-colors duration-200 flex items-center justify-center">
+              <div className="w-16 h-16 rounded-full bg-red-600 flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-200">
+                <svg className="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </div>
+            </div>
+          </button>
+        )}
+        {/* Label */}
+        <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 to-transparent pointer-events-none">
+          <span className="inline-block text-[9px] font-semibold px-2 py-0.5 rounded-full mb-1 bg-purple-100 text-purple-700">Reel</span>
+          <p className="text-white text-xs font-semibold truncate">{item.client}</p>
+        </div>
       </div>
     </div>
   );
@@ -91,20 +115,44 @@ function ReelCard({ item }: { item: (typeof reelsData)[0] }) {
 /* ─── Podcast card — 16:9 YouTube embed ────────────────── */
 
 function PodcastCard({ item }: { item: (typeof podcastsData)[0] }) {
+  const [playing, setPlaying] = useState(false);
   return (
-    <div className="relative rounded-2xl overflow-hidden w-full">
+    <div className="relative rounded-2xl overflow-hidden w-full shadow-md">
       <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-        <iframe
-          src={`https://www.youtube.com/embed/${item.videoId}?rel=0`}
-          title={item.client}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          className="absolute inset-0 w-full h-full"
-        />
-      </div>
-      <div className="p-2.5">
-        <span className="inline-block text-[9px] font-semibold px-2 py-0.5 rounded-full mb-1 bg-pink-100 text-pink-700">Podcast</span>
-        <p className="text-xs font-semibold text-gray-800 truncate">{item.client}</p>
+        {playing ? (
+          <iframe
+            src={`https://www.youtube.com/embed/${item.videoId}?autoplay=1&rel=0`}
+            title={item.client}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="absolute inset-0 w-full h-full"
+          />
+        ) : (
+          <button
+            onClick={() => setPlaying(true)}
+            className="absolute inset-0 w-full h-full group"
+          >
+            {/* HD thumbnail */}
+            <img
+              src={`https://img.youtube.com/vi/${item.videoId}/maxresdefault.jpg`}
+              alt={item.client}
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            {/* Play button */}
+            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/35 transition-colors duration-200 flex items-center justify-center">
+              <div className="w-20 h-20 rounded-full bg-red-600 flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-200">
+                <svg className="w-9 h-9 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </div>
+            </div>
+          </button>
+        )}
+        {/* Label */}
+        <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 to-transparent pointer-events-none">
+          <span className="inline-block text-[9px] font-semibold px-2 py-0.5 rounded-full mb-1 bg-pink-100 text-pink-700">Podcast</span>
+          <p className="text-white text-sm font-semibold truncate">{item.client}</p>
+        </div>
       </div>
     </div>
   );
@@ -311,7 +359,7 @@ export default function OurWorkClient() {
                   </svg>
                 }
               />
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {podcastsData.map((item, i) => (
                   <PodcastCard key={i} item={item} />
                 ))}
