@@ -8,43 +8,19 @@ export const metadata: Metadata = {
   description: "See how Pro Trend has helped brands grow through strategic digital marketing. Client showcase with real results.",
 };
 
-const works = [
-  {
-    client: "Arrow Plus",
-    category: "Social Media & Content",
-    description: "Transformed Arrow Plus's social presence with cinematic reels and a consistent brand identity that tripled engagement.",
-    videoId: "YOUTUBE_VIDEO_ID_1",
-  },
-  {
-    client: "Askans Architecture",
-    category: "SEO & Content",
-    description: "Built a full SEO strategy and content calendar that drove a 180% increase in organic website traffic within 3 months.",
-    videoId: "YOUTUBE_VIDEO_ID_2",
-  },
-  {
-    client: "ETA's Cars",
-    category: "Google Ads & Social Media",
-    description: "Performance ad campaigns and social content that generated 300+ qualified leads in the first month.",
-    videoId: "YOUTUBE_VIDEO_ID_3",
-  },
-  {
-    client: "Lazaro Tailorshop",
-    category: "Brand Content & Reels",
-    description: "Elevated Lazaro's premium brand image through styled shoots and viral-ready reels reaching 500K+ views.",
-    videoId: "YOUTUBE_VIDEO_ID_4",
-  },
-  {
-    client: "Vanavil Farms",
-    category: "Social Media Management",
-    description: "Grew Vanavil's Instagram from 0 to 10K followers in 60 days through targeted content strategy.",
-    videoId: "YOUTUBE_VIDEO_ID_5",
-  },
-  {
-    client: "Frames & Fusion",
-    category: "Content Creation",
-    description: "Produced a full library of branded video and photo content that became the backbone of their marketing.",
-    videoId: "YOUTUBE_VIDEO_ID_6",
-  },
+const reels = [
+  { client: "Arrow Plus", category: "Social Media", videoId: "YOUTUBE_VIDEO_ID_1" },
+  { client: "Askans Architecture", category: "Content", videoId: "YOUTUBE_VIDEO_ID_2" },
+  { client: "ETA's Cars", category: "Google Ads", videoId: "YOUTUBE_VIDEO_ID_3" },
+  { client: "Lazaro Tailorshop", category: "Reels", videoId: "YOUTUBE_VIDEO_ID_4" },
+  { client: "Vanavil Farms", category: "Social Media", videoId: "YOUTUBE_VIDEO_ID_5" },
+  { client: "Frames & Fusion", category: "Content", videoId: "YOUTUBE_VIDEO_ID_6" },
+  { client: "Landmark Pallavaa", category: "Reels", videoId: "YOUTUBE_VIDEO_ID_7" },
+  { client: "Arrow Plus", category: "Reels", videoId: "YOUTUBE_VIDEO_ID_8" },
+  { client: "ETA's Cars", category: "Content", videoId: "YOUTUBE_VIDEO_ID_9" },
+  { client: "Lazaro Tailorshop", category: "Social Media", videoId: "YOUTUBE_VIDEO_ID_10" },
+  { client: "Vanavil Farms", category: "Reels", videoId: "YOUTUBE_VIDEO_ID_11" },
+  { client: "Askans Architecture", category: "Content", videoId: "YOUTUBE_VIDEO_ID_12" },
 ];
 
 export default function OurWork() {
@@ -78,30 +54,29 @@ export default function OurWork() {
         </div>
       </section>
 
-      {/* Video Grid */}
-      <section className="py-16 px-4 pb-24">
+      {/* Reels Grid */}
+      <section className="py-8 px-4 pb-24">
         <div className="max-w-full mx-auto px-2">
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-            {works.map((work, i) => (
-              <ScrollAnimate key={work.client} animation="fade-up" delay={i * 100}>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+            {reels.map((reel, i) => (
+              <ScrollAnimate key={`${reel.client}-${i}`} animation="fade-up" delay={(i % 6) * 80}>
                 <div className="floating-card overflow-hidden rounded-2xl transition-all duration-300 group">
-                  {/* Video Slot */}
-                  <div className="relative w-full aspect-video bg-gray-100">
+                  {/* Vertical reel slot — 9:16 aspect ratio */}
+                  <div className="relative w-full" style={{ paddingBottom: "177.78%" }}>
                     <iframe
-                      src={`https://www.youtube.com/embed/${work.videoId}`}
-                      title={`${work.client} — ${work.category}`}
+                      src={`https://www.youtube.com/embed/${reel.videoId}?rel=0`}
+                      title={`${reel.client} — ${reel.category}`}
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
                       className="absolute inset-0 w-full h-full"
                     />
                   </div>
-                  {/* Card Body */}
-                  <div className="p-6">
-                    <div className="inline-flex items-center gap-1.5 bg-purple/5 border border-purple/10 rounded-full px-3 py-1 mb-3">
-                      <span className="text-xs font-medium text-purple">{work.category}</span>
+                  {/* Label */}
+                  <div className="p-3">
+                    <div className="inline-flex items-center gap-1 bg-purple/5 border border-purple/10 rounded-full px-2.5 py-0.5 mb-1.5">
+                      <span className="text-[10px] font-medium text-purple">{reel.category}</span>
                     </div>
-                    <h3 className="text-lg font-bold text-gray-900 mb-2">{work.client}</h3>
-                    <p className="text-gray-500 text-sm leading-relaxed">{work.description}</p>
+                    <p className="text-xs font-semibold text-gray-800 truncate">{reel.client}</p>
                   </div>
                 </div>
               </ScrollAnimate>
