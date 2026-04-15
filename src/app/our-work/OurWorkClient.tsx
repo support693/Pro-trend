@@ -7,6 +7,10 @@ import Navbar from "@/components/Navbar";
 
 /* ─── Data ─────────────────────────────────────────────── */
 
+const reelsData = [
+  { client: "Pro Trend Reel", videoId: "sCONGS2eHhk" },
+];
+
 const postersData = [
   { client: "Client Poster 1",   src: "/works/posters/poster-1.png"        },
   { client: "Client Poster 2",   src: "/works/posters/poster-2.png"        },
@@ -41,7 +45,7 @@ const carouselData = [
 
 /* ─── Filter tabs ───────────────────────────────────────── */
 
-const TABS = ["All", "Posters", "Carousels"] as const;
+const TABS = ["All", "Reels", "Posters", "Carousels"] as const;
 type Tab = (typeof TABS)[number];
 
 /* ─── Section heading ───────────────────────────────────── */
@@ -52,6 +56,28 @@ function SectionHeading({ icon, label, accent }: { icon: React.ReactNode; label:
       <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${accent}`}>{icon}</div>
       <h2 className="text-xl font-bold text-gray-900">{label}</h2>
       <div className="flex-1 h-px bg-gray-100" />
+    </div>
+  );
+}
+
+/* ─── Reel card — 9:16 YouTube Short ───────────────────── */
+
+function ReelCard({ item }: { item: (typeof reelsData)[0] }) {
+  return (
+    <div className="relative rounded-2xl overflow-hidden w-full">
+      <div className="relative w-full" style={{ paddingBottom: "177.78%" }}>
+        <iframe
+          src={`https://www.youtube.com/embed/${item.videoId}?rel=0`}
+          title={item.client}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          className="absolute inset-0 w-full h-full"
+        />
+      </div>
+      <div className="p-2.5">
+        <span className="inline-block text-[9px] font-semibold px-2 py-0.5 rounded-full mb-1 bg-purple-100 text-purple-700">Reel</span>
+        <p className="text-xs font-semibold text-gray-800 truncate">{item.client}</p>
+      </div>
     </div>
   );
 }
@@ -224,6 +250,26 @@ export default function OurWorkClient() {
       {/* Sections */}
       <section className="px-4 pb-24">
         <div className="max-w-7xl mx-auto space-y-14">
+
+          {/* Reels */}
+          {show("Reels") && (
+            <div>
+              <SectionHeading
+                label="Reels"
+                accent="bg-purple-100"
+                icon={
+                  <svg className="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                }
+              />
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+                {reelsData.map((item, i) => (
+                  <ReelCard key={i} item={item} />
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Posters */}
           {show("Posters") && (
