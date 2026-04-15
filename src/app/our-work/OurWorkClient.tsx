@@ -369,9 +369,11 @@ export default function OurWorkClient() {
                   </svg>
                 }
               />
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="flex overflow-x-auto snap-x snap-mandatory gap-5 pb-3 -mx-4 px-4 scrollbar-hide">
                 {reelsData.map((item, i) => (
-                  <ReelCard key={i} item={item} />
+                  <div key={i} className="snap-start shrink-0 w-[220px] sm:w-[260px]">
+                    <ReelCard item={item} />
+                  </div>
                 ))}
               </div>
             </div>
@@ -389,9 +391,11 @@ export default function OurWorkClient() {
                   </svg>
                 }
               />
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="flex overflow-x-auto snap-x snap-mandatory gap-5 pb-3 -mx-4 px-4 scrollbar-hide">
                 {podcastsData.map((item, i) => (
-                  <PodcastCard key={i} item={item} />
+                  <div key={i} className="snap-start shrink-0 w-[85vw] sm:w-[480px] lg:w-[560px]">
+                    <PodcastCard item={item} />
+                  </div>
                 ))}
               </div>
             </div>
@@ -429,7 +433,7 @@ export default function OurWorkClient() {
                   </svg>
                 }
               />
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {carouselData.map((item, i) => (
                   <CarouselCard key={i} item={item} />
                 ))}
