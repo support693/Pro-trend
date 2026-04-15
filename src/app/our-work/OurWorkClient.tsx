@@ -7,29 +7,13 @@ import Navbar from "@/components/Navbar";
 
 /* ─── Data ─────────────────────────────────────────────── */
 
-const reelsData = [
-  { client: "Client Reel 1",    src: "/works/videos/reel-1.mp4" },
-  { client: "Client Reel 2",    src: "/works/videos/reel-2.mp4" },
-  { client: "Client Reel 3",    src: "/works/videos/reel-3.mp4" },
-  { client: "Client Reel 4",    src: "/works/videos/reel-4.mp4" },
-  { client: "CPL League Reel",  src: "/works/videos/reel-5.mp4" },
-  { client: "Lazaro Tailorshop",src: "/works/videos/reel-6.mp4" },
-];
-
-const podcastsData = [
-  { client: "3 Mind Hacks",             src: "/works/videos/podcast-1.mp4" },
-  { client: "Nazir Sir — Brand Talk",   src: "/works/videos/podcast-2.mp4" },
-  { client: "3 Marketing Techniques",   src: "/works/videos/podcast-3.mp4" },
-  { client: "Motivational Series",      src: "/works/videos/podcast-4.mp4" },
-];
-
 const postersData = [
-  { client: "Client Poster 1",    src: "/works/posters/poster-1.png"        },
-  { client: "Client Poster 2",    src: "/works/posters/poster-2.png"        },
-  { client: "Client Poster 3",    src: "/works/posters/poster-3.png"        },
-  { client: "Lazaro Tailorshop",  src: "/works/posters/poster-lazaro-1.png" },
-  { client: "Lazaro — Vol. 2",    src: "/works/posters/poster-lazaro-2.png" },
-  { client: "Lazaro — Main",      src: "/works/posters/poster-lazaro-3.png" },
+  { client: "Client Poster 1",   src: "/works/posters/poster-1.png"        },
+  { client: "Client Poster 2",   src: "/works/posters/poster-2.png"        },
+  { client: "Client Poster 3",   src: "/works/posters/poster-3.png"        },
+  { client: "Lazaro Tailorshop", src: "/works/posters/poster-lazaro-1.png" },
+  { client: "Lazaro — Vol. 2",   src: "/works/posters/poster-lazaro-2.png" },
+  { client: "Lazaro — Main",     src: "/works/posters/poster-lazaro-3.png" },
 ];
 
 const carouselData = [
@@ -57,7 +41,7 @@ const carouselData = [
 
 /* ─── Filter tabs ───────────────────────────────────────── */
 
-const TABS = ["All", "Reels", "Podcasts", "Posters", "Carousels"] as const;
+const TABS = ["All", "Posters", "Carousels"] as const;
 type Tab = (typeof TABS)[number];
 
 /* ─── Section heading ───────────────────────────────────── */
@@ -72,92 +56,7 @@ function SectionHeading({ icon, label, accent }: { icon: React.ReactNode; label:
   );
 }
 
-/* ─── Reel card — 9:16 portrait ────────────────────────── */
-
-function ReelCard({ item, onPlay }: { item: (typeof reelsData)[0]; onPlay: () => void }) {
-  return (
-    <button
-      onClick={onPlay}
-      className="group relative rounded-2xl overflow-hidden w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-purple/60"
-    >
-      <div className="relative w-full" style={{ paddingBottom: "177.78%" }}>
-        <video
-          src={item.src}
-          preload="metadata"
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        {/* dark tint always */}
-        <div className="absolute inset-0 bg-black/20" />
-        {/* Play button */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-12 h-12 rounded-full bg-white/25 backdrop-blur-sm border border-white/40 flex items-center justify-center group-hover:scale-110 group-hover:bg-white/40 transition-all duration-200">
-            <svg className="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M8 5v14l11-7z" />
-            </svg>
-          </div>
-        </div>
-        {/* Hover reveal */}
-        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
-          <span className="text-white text-[10px] font-bold tracking-widest uppercase">Watch Reel</span>
-        </div>
-        {/* Label */}
-        <div className="absolute bottom-0 left-0 right-0 p-2.5 bg-gradient-to-t from-black/70 to-transparent">
-          <span className="inline-block text-[9px] font-semibold px-2 py-0.5 rounded-full mb-1 bg-purple-100 text-purple-700">Reel</span>
-          <p className="text-white text-[11px] font-semibold truncate">{item.client}</p>
-        </div>
-      </div>
-    </button>
-  );
-}
-
-/* ─── Podcast card — 16:9 landscape ────────────────────── */
-
-function PodcastCard({ item, onPlay }: { item: (typeof podcastsData)[0]; onPlay: () => void }) {
-  return (
-    <button
-      onClick={onPlay}
-      className="group relative rounded-2xl overflow-hidden w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-400/60"
-    >
-      <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-        <video
-          src={item.src}
-          preload="metadata"
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black/25" />
-        {/* Waveform decoration */}
-        <div className="absolute inset-0 flex items-center justify-center gap-1 opacity-20 pointer-events-none">
-          {[3,6,4,8,5,9,4,7,3,6,5,8,4,6,3].map((h, i) => (
-            <div key={i} className="w-1 bg-white rounded-full" style={{ height: `${h * 4}px` }} />
-          ))}
-        </div>
-        {/* Play */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-14 h-14 rounded-full bg-white/25 backdrop-blur-sm border border-white/40 flex items-center justify-center group-hover:scale-110 group-hover:bg-white/40 transition-all duration-200">
-            <svg className="w-6 h-6 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M8 5v14l11-7z" />
-            </svg>
-          </div>
-        </div>
-        {/* Hover reveal */}
-        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
-          <span className="text-white text-[10px] font-bold tracking-widest uppercase">Watch Episode</span>
-        </div>
-        {/* Label */}
-        <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 to-transparent">
-          <span className="inline-block text-[9px] font-semibold px-2 py-0.5 rounded-full mb-1 bg-pink-100 text-pink-700">Podcast</span>
-          <p className="text-white text-xs font-semibold truncate">{item.client}</p>
-        </div>
-      </div>
-    </button>
-  );
-}
-
-/* ─── Poster card — 4:5 portrait ───────────────────────── */
+/* ─── Poster card ───────────────────────────────────────── */
 
 function PosterCard({ item, onOpen }: { item: (typeof postersData)[0]; onOpen: () => void }) {
   return (
@@ -173,7 +72,6 @@ function PosterCard({ item, onOpen }: { item: (typeof postersData)[0]; onOpen: (
           className="object-cover"
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
         />
-        {/* Hover overlay */}
         <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
           <div className="w-10 h-10 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center">
             <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -181,7 +79,6 @@ function PosterCard({ item, onOpen }: { item: (typeof postersData)[0]; onOpen: (
             </svg>
           </div>
         </div>
-        {/* Label */}
         <div className="absolute bottom-0 left-0 right-0 p-2.5 bg-gradient-to-t from-black/70 to-transparent">
           <span className="inline-block text-[9px] font-semibold px-2 py-0.5 rounded-full mb-1 bg-amber-100 text-amber-700">Poster</span>
           <p className="text-white text-[11px] font-semibold truncate">{item.client}</p>
@@ -191,7 +88,7 @@ function PosterCard({ item, onOpen }: { item: (typeof postersData)[0]; onOpen: (
   );
 }
 
-/* ─── Carousel card — real slides with dot nav ──────────── */
+/* ─── Carousel card ─────────────────────────────────────── */
 
 function CarouselCard({ item }: { item: (typeof carouselData)[0] }) {
   const [active, setActive] = useState(0);
@@ -206,7 +103,6 @@ function CarouselCard({ item }: { item: (typeof carouselData)[0] }) {
           className="object-cover transition-opacity duration-300"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
         />
-        {/* Nav arrows */}
         <div className="absolute inset-0 flex items-center justify-between px-2 opacity-0 group-hover:opacity-100 transition-opacity">
           <button
             onClick={() => setActive((p) => (p - 1 + total) % total)}
@@ -225,7 +121,6 @@ function CarouselCard({ item }: { item: (typeof carouselData)[0] }) {
             </svg>
           </button>
         </div>
-        {/* Label + dots */}
         <div className="absolute bottom-0 left-0 right-0 p-2.5 bg-gradient-to-t from-black/70 to-transparent">
           <span className="inline-block text-[9px] font-semibold px-2 py-0.5 rounded-full mb-1 bg-teal-100 text-teal-700">Carousel</span>
           <p className="text-white text-[11px] font-semibold truncate">{item.client}</p>
@@ -244,23 +139,15 @@ function CarouselCard({ item }: { item: (typeof carouselData)[0] }) {
   );
 }
 
-/* ─── Lightbox ───────────────────────────────────────────── */
+/* ─── Image lightbox ─────────────────────────────────────── */
 
-type LightboxItem =
-  | { type: "video"; src: string; client: string; category: string }
-  | { type: "image"; src: string; client: string };
-
-function Lightbox({ item, onClose }: { item: LightboxItem; onClose: () => void }) {
-  const isPortrait = item.type === "video" && item.category === "Reels";
+function Lightbox({ src, client, onClose }: { src: string; client: string; onClose: () => void }) {
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm px-4"
       onClick={onClose}
     >
-      <div
-        className={`relative w-full ${item.type === "image" ? "max-w-lg" : isPortrait ? "max-w-sm" : "max-w-2xl"}`}
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="relative w-full max-w-lg" onClick={(e) => e.stopPropagation()}>
         <button
           onClick={onClose}
           className="absolute -top-10 right-0 text-white/70 hover:text-white transition-colors text-sm flex items-center gap-1.5"
@@ -270,32 +157,14 @@ function Lightbox({ item, onClose }: { item: LightboxItem; onClose: () => void }
           </svg>
           Close
         </button>
-
-        <p className="text-white font-semibold text-sm mb-3">{item.client}</p>
-
-        {item.type === "video" ? (
-          <div
-            className="relative w-full rounded-2xl overflow-hidden bg-black"
-            style={{ paddingBottom: isPortrait ? "177.78%" : "56.25%" }}
-          >
-            <video
-              src={item.src}
-              controls
-              autoPlay
-              className="absolute inset-0 w-full h-full"
-            />
-          </div>
-        ) : (
-          <div className="relative w-full rounded-2xl overflow-hidden">
-            <Image
-              src={item.src}
-              alt={item.client}
-              width={800}
-              height={1000}
-              className="w-full h-auto rounded-2xl"
-            />
-          </div>
-        )}
+        <p className="text-white font-semibold text-sm mb-3">{client}</p>
+        <Image
+          src={src}
+          alt={client}
+          width={800}
+          height={1000}
+          className="w-full h-auto rounded-2xl"
+        />
       </div>
     </div>
   );
@@ -305,7 +174,7 @@ function Lightbox({ item, onClose }: { item: LightboxItem; onClose: () => void }
 
 export default function OurWorkClient() {
   const [activeTab, setActiveTab] = useState<Tab>("All");
-  const [lightbox, setLightbox] = useState<LightboxItem | null>(null);
+  const [lightbox, setLightbox] = useState<{ src: string; client: string } | null>(null);
 
   const show = (tab: Tab) => activeTab === "All" || activeTab === tab;
 
@@ -356,54 +225,6 @@ export default function OurWorkClient() {
       <section className="px-4 pb-24">
         <div className="max-w-7xl mx-auto space-y-14">
 
-          {/* Reels */}
-          {show("Reels") && (
-            <div>
-              <SectionHeading
-                label="Reels"
-                accent="bg-purple-100"
-                icon={
-                  <svg className="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                }
-              />
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-                {reelsData.map((item, i) => (
-                  <ReelCard
-                    key={i}
-                    item={item}
-                    onPlay={() => setLightbox({ type: "video", src: item.src, client: item.client, category: "Reels" })}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Podcasts */}
-          {show("Podcasts") && (
-            <div>
-              <SectionHeading
-                label="Podcasts"
-                accent="bg-pink-100"
-                icon={
-                  <svg className="w-4 h-4 text-pink-600" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
-                  </svg>
-                }
-              />
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {podcastsData.map((item, i) => (
-                  <PodcastCard
-                    key={i}
-                    item={item}
-                    onPlay={() => setLightbox({ type: "video", src: item.src, client: item.client, category: "Podcasts" })}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
-
           {/* Posters */}
           {show("Posters") && (
             <div>
@@ -418,11 +239,7 @@ export default function OurWorkClient() {
               />
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
                 {postersData.map((item, i) => (
-                  <PosterCard
-                    key={i}
-                    item={item}
-                    onOpen={() => setLightbox({ type: "image", src: item.src, client: item.client })}
-                  />
+                  <PosterCard key={i} item={item} onOpen={() => setLightbox({ src: item.src, client: item.client })} />
                 ))}
               </div>
             </div>
@@ -452,7 +269,7 @@ export default function OurWorkClient() {
       </section>
 
       {/* Lightbox */}
-      {lightbox && <Lightbox item={lightbox} onClose={() => setLightbox(null)} />}
+      {lightbox && <Lightbox src={lightbox.src} client={lightbox.client} onClose={() => setLightbox(null)} />}
 
       {/* CTA */}
       <section className="py-16 px-4 bg-gray-50/50">
