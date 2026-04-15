@@ -4,42 +4,307 @@ import { useState } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 
-const reels = [
-  { client: "Arrow Plus", category: "Reels", videoId: "YOUTUBE_VIDEO_ID_1" },
-  { client: "Askans Architecture", category: "Posters", videoId: "YOUTUBE_VIDEO_ID_2" },
-  { client: "ETA's Cars", category: "Podcasts", videoId: "YOUTUBE_VIDEO_ID_3" },
-  { client: "Lazaro Tailorshop", category: "Carousels", videoId: "YOUTUBE_VIDEO_ID_4" },
-  { client: "Vanavil Farms", category: "Reels", videoId: "YOUTUBE_VIDEO_ID_5" },
-  { client: "Frames & Fusion", category: "Posters", videoId: "YOUTUBE_VIDEO_ID_6" },
-  { client: "Landmark Pallavaa", category: "Carousels", videoId: "YOUTUBE_VIDEO_ID_7" },
-  { client: "Arrow Plus", category: "Podcasts", videoId: "YOUTUBE_VIDEO_ID_8" },
-  { client: "ETA's Cars", category: "Reels", videoId: "YOUTUBE_VIDEO_ID_9" },
-  { client: "Lazaro Tailorshop", category: "Posters", videoId: "YOUTUBE_VIDEO_ID_10" },
-  { client: "Vanavil Farms", category: "Carousels", videoId: "YOUTUBE_VIDEO_ID_11" },
-  { client: "Askans Architecture", category: "Podcasts", videoId: "YOUTUBE_VIDEO_ID_12" },
+/* ─── Data ─────────────────────────────────────────────── */
+
+const reelsData = [
+  { client: "Arrow Plus",        videoId: "YOUTUBE_VIDEO_ID_1" },
+  { client: "Vanavil Farms",     videoId: "YOUTUBE_VIDEO_ID_2" },
+  { client: "ETA's Cars",        videoId: "YOUTUBE_VIDEO_ID_3" },
+  { client: "Lazaro Tailorshop", videoId: "YOUTUBE_VIDEO_ID_4" },
+  { client: "Landmark Pallavaa", videoId: "YOUTUBE_VIDEO_ID_5" },
+  { client: "Frames & Fusion",   videoId: "YOUTUBE_VIDEO_ID_6" },
 ];
 
-const categories = ["All", "Reels", "Podcasts", "Posters", "Carousels"];
+const podcastsData = [
+  { client: "Arrow Plus",          videoId: "YOUTUBE_VIDEO_ID_7"  },
+  { client: "Askans Architecture", videoId: "YOUTUBE_VIDEO_ID_8"  },
+  { client: "Vanavil Farms",       videoId: "YOUTUBE_VIDEO_ID_9"  },
+  { client: "ETA's Cars",          videoId: "YOUTUBE_VIDEO_ID_10" },
+];
 
-const categoryGradients: Record<string, string> = {
-  "Reels": "from-purple-600 via-purple-500 to-violet-400",
-  "Podcasts": "from-rose-500 via-pink-400 to-fuchsia-400",
-  "Posters": "from-amber-500 via-orange-400 to-yellow-400",
-  "Carousels": "from-teal-500 via-emerald-400 to-cyan-400",
-};
+const postersData = [
+  { client: "Lazaro Tailorshop",   imageUrl: "" },
+  { client: "Frames & Fusion",     imageUrl: "" },
+  { client: "Landmark Pallavaa",   imageUrl: "" },
+  { client: "Askans Architecture", imageUrl: "" },
+  { client: "Arrow Plus",          imageUrl: "" },
+  { client: "Vanavil Farms",       imageUrl: "" },
+];
 
-const categoryAccent: Record<string, string> = {
-  "Reels": "bg-purple-100 text-purple-700",
-  "Podcasts": "bg-pink-100 text-pink-700",
-  "Posters": "bg-amber-100 text-amber-700",
-  "Carousels": "bg-teal-100 text-teal-700",
-};
+const carouselData = [
+  { client: "ETA's Cars",          slides: 5 },
+  { client: "Lazaro Tailorshop",   slides: 4 },
+  { client: "Vanavil Farms",       slides: 6 },
+  { client: "Frames & Fusion",     slides: 4 },
+];
+
+/* ─── Types ─────────────────────────────────────────────── */
+
+type VideoItem = { client: string; videoId: string; category: string };
+
+/* ─── Filter tabs ───────────────────────────────────────── */
+
+const TABS = ["All", "Reels", "Podcasts", "Posters", "Carousels"] as const;
+type Tab = (typeof TABS)[number];
+
+/* ─── Section heading ───────────────────────────────────── */
+
+function SectionHeading({
+  icon,
+  label,
+  accent,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  accent: string;
+}) {
+  return (
+    <div className="flex items-center gap-3 mb-6">
+      <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${accent}`}>
+        {icon}
+      </div>
+      <h2 className="text-xl font-bold text-gray-900">{label}</h2>
+      <div className="flex-1 h-px bg-gray-100" />
+    </div>
+  );
+}
+
+/* ─── Reel card (9:16 portrait) ─────────────────────────── */
+
+function ReelCard({
+  item,
+  onPlay,
+}: {
+  item: (typeof reelsData)[0];
+  onPlay: (v: VideoItem) => void;
+}) {
+  return (
+    <button
+      onClick={() => onPlay({ ...item, category: "Reels" })}
+      className="group relative rounded-2xl overflow-hidden w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-purple/60"
+    >
+      <div className="relative w-full" style={{ paddingBottom: "177.78%" }}>
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-600 via-purple-500 to-violet-400" />
+        <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJub2lzZSI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuNjUiIG51bU9jdGF2ZXM9IjMiIHN0aXRjaFRpbGVzPSJzdGl0Y2giLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsdGVyPSJ1cmwoI25vaXNlKSIgb3BhY2l0eT0iMSIvPjwvc3ZnPg==')]" />
+        {/* Play */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center group-hover:scale-110 group-hover:bg-white/30 transition-all duration-200">
+            <svg className="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </div>
+        </div>
+        {/* Hover overlay */}
+        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
+          <span className="text-white text-[10px] font-bold tracking-widest uppercase">Watch Reel</span>
+        </div>
+        {/* Label */}
+        <div className="absolute bottom-0 left-0 right-0 p-2.5 bg-gradient-to-t from-black/60 to-transparent">
+          <span className="inline-block text-[9px] font-semibold px-2 py-0.5 rounded-full mb-1 bg-purple-100 text-purple-700">Reel</span>
+          <p className="text-white text-[11px] font-semibold truncate">{item.client}</p>
+        </div>
+      </div>
+    </button>
+  );
+}
+
+/* ─── Podcast card (16:9 landscape) ─────────────────────── */
+
+function PodcastCard({
+  item,
+  onPlay,
+}: {
+  item: (typeof podcastsData)[0];
+  onPlay: (v: VideoItem) => void;
+}) {
+  return (
+    <button
+      onClick={() => onPlay({ ...item, category: "Podcasts" })}
+      className="group relative rounded-2xl overflow-hidden w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-400/60"
+    >
+      <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+        <div className="absolute inset-0 bg-gradient-to-br from-rose-500 via-pink-400 to-fuchsia-400" />
+        <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJub2lzZSI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuNjUiIG51bU9jdGF2ZXM9IjMiIHN0aXRjaFRpbGVzPSJzdGl0Y2giLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsdGVyPSJ1cmwoI25vaXNlKSIgb3BhY2l0eT0iMSIvPjwvc3ZnPg==')]" />
+        {/* Waveform decoration */}
+        <div className="absolute inset-0 flex items-center justify-center gap-1 opacity-30">
+          {[3, 6, 4, 8, 5, 9, 4, 7, 3, 6, 5, 8, 4, 6, 3].map((h, i) => (
+            <div key={i} className="w-1 bg-white rounded-full" style={{ height: `${h * 4}px` }} />
+          ))}
+        </div>
+        {/* Play */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center group-hover:scale-110 group-hover:bg-white/30 transition-all duration-200">
+            <svg className="w-6 h-6 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </div>
+        </div>
+        {/* Hover overlay */}
+        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
+          <span className="text-white text-[10px] font-bold tracking-widest uppercase">Watch Episode</span>
+        </div>
+        {/* Label */}
+        <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/60 to-transparent">
+          <span className="inline-block text-[9px] font-semibold px-2 py-0.5 rounded-full mb-1 bg-pink-100 text-pink-700">Podcast</span>
+          <p className="text-white text-xs font-semibold truncate">{item.client}</p>
+        </div>
+      </div>
+    </button>
+  );
+}
+
+/* ─── Poster card (4:5 portrait image frame) ────────────── */
+
+function PosterCard({ item }: { item: (typeof postersData)[0] }) {
+  return (
+    <div className="group relative rounded-2xl overflow-hidden w-full cursor-pointer">
+      <div className="relative w-full" style={{ paddingBottom: "125%" }}>
+        {item.imageUrl ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={item.imageUrl} alt={item.client} className="absolute inset-0 w-full h-full object-cover" />
+        ) : (
+          <>
+            <div className="absolute inset-0 bg-gradient-to-br from-amber-50 to-orange-100 border-2 border-dashed border-amber-300" />
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
+              <div className="w-10 h-10 rounded-xl bg-amber-200 flex items-center justify-center">
+                <svg className="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3 3h18M3 21h18" />
+                </svg>
+              </div>
+              <span className="text-[10px] text-amber-500 font-medium">Poster</span>
+            </div>
+          </>
+        )}
+        {/* Hover overlay */}
+        <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        {/* Label */}
+        <div className="absolute bottom-0 left-0 right-0 p-2.5 bg-gradient-to-t from-black/50 to-transparent">
+          <span className="inline-block text-[9px] font-semibold px-2 py-0.5 rounded-full mb-1 bg-amber-100 text-amber-700">Poster</span>
+          <p className="text-white text-[11px] font-semibold truncate">{item.client}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Carousel card (wide slot with slide dots) ─────────── */
+
+function CarouselCard({ item }: { item: (typeof carouselData)[0] }) {
+  const [active, setActive] = useState(0);
+  return (
+    <div className="group relative rounded-2xl overflow-hidden w-full">
+      <div className="relative w-full" style={{ paddingBottom: "66.66%" }}>
+        <div className="absolute inset-0 bg-gradient-to-br from-teal-50 to-cyan-100 border-2 border-dashed border-teal-300" />
+        {/* Slide placeholder stack */}
+        <div className="absolute inset-4 flex items-center justify-center">
+          <div className="relative w-full h-full">
+            {/* Back cards */}
+            <div className="absolute inset-0 translate-x-3 -translate-y-1 rounded-xl bg-teal-200/60 border border-teal-300" />
+            <div className="absolute inset-0 translate-x-1.5 -translate-y-0.5 rounded-xl bg-teal-200/80 border border-teal-300" />
+            {/* Front card */}
+            <div className="absolute inset-0 rounded-xl bg-white border border-teal-200 flex flex-col items-center justify-center gap-2 shadow-sm">
+              <div className="w-8 h-8 rounded-lg bg-teal-100 flex items-center justify-center">
+                <svg className="w-4 h-4 text-teal-600" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+                </svg>
+              </div>
+              <span className="text-[9px] text-teal-500 font-medium">{item.slides} slides</span>
+            </div>
+          </div>
+        </div>
+        {/* Nav arrows */}
+        <div className="absolute inset-0 flex items-center justify-between px-2 opacity-0 group-hover:opacity-100 transition-opacity">
+          <button
+            onClick={() => setActive((p) => (p - 1 + item.slides) % item.slides)}
+            className="w-7 h-7 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center shadow text-teal-600 hover:bg-white transition-colors"
+          >
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            </svg>
+          </button>
+          <button
+            onClick={() => setActive((p) => (p + 1) % item.slides)}
+            className="w-7 h-7 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center shadow text-teal-600 hover:bg-white transition-colors"
+          >
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+          </button>
+        </div>
+        {/* Label */}
+        <div className="absolute bottom-0 left-0 right-0 p-2.5">
+          <span className="inline-block text-[9px] font-semibold px-2 py-0.5 rounded-full mb-1 bg-teal-100 text-teal-700">Carousel</span>
+          <p className="text-gray-800 text-[11px] font-semibold truncate">{item.client}</p>
+          {/* Dots */}
+          <div className="flex gap-1 mt-1.5">
+            {Array.from({ length: item.slides }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setActive(i)}
+                className={`h-1 rounded-full transition-all duration-200 ${i === active ? "w-4 bg-teal-500" : "w-1.5 bg-teal-200"}`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Lightbox ───────────────────────────────────────────── */
+
+function Lightbox({ video, onClose }: { video: VideoItem; onClose: () => void }) {
+  const isPortrait = video.category === "Reels";
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm px-4"
+      onClick={onClose}
+    >
+      <div
+        className={`relative w-full ${isPortrait ? "max-w-sm" : "max-w-2xl"}`}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          onClick={onClose}
+          className="absolute -top-10 right-0 text-white/70 hover:text-white transition-colors text-sm flex items-center gap-1.5"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+          Close
+        </button>
+        <div className="mb-3 flex items-center gap-2">
+          <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${
+            video.category === "Reels" ? "bg-purple-100 text-purple-700" : "bg-pink-100 text-pink-700"
+          }`}>
+            {video.category}
+          </span>
+          <span className="text-white font-semibold text-sm">{video.client}</span>
+        </div>
+        <div
+          className="relative w-full rounded-2xl overflow-hidden"
+          style={{ paddingBottom: isPortrait ? "177.78%" : "56.25%" }}
+        >
+          <iframe
+            src={`https://www.youtube.com/embed/${video.videoId}?autoplay=1&rel=0`}
+            title={`${video.client} — ${video.category}`}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="absolute inset-0 w-full h-full"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Main page ──────────────────────────────────────────── */
 
 export default function OurWorkClient() {
-  const [activeFilter, setActiveFilter] = useState("All");
-  const [activeVideo, setActiveVideo] = useState<(typeof reels)[0] | null>(null);
+  const [activeTab, setActiveTab] = useState<Tab>("All");
+  const [activeVideo, setActiveVideo] = useState<VideoItem | null>(null);
 
-  const filtered = activeFilter === "All" ? reels : reels.filter((r) => r.category === activeFilter);
+  const show = (tab: Tab) => activeTab === "All" || activeTab === tab;
 
   return (
     <>
@@ -60,136 +325,119 @@ export default function OurWorkClient() {
             Results We&apos;ve <span className="gradient-text">Delivered</span>
           </h1>
           <p className="mt-6 text-lg text-gray-500 max-w-xl mx-auto leading-relaxed">
-            Real campaigns. Real brands. Real growth. See how we&apos;ve helped our clients scale their digital presence.
+            Real campaigns. Real brands. Real growth.
           </p>
         </div>
       </section>
 
-      {/* Filter Pills */}
+      {/* Filter Tabs */}
       <section className="px-4 pb-10">
         <div className="flex flex-wrap justify-center gap-2.5">
-          {categories.map((cat) => (
+          {TABS.map((tab) => (
             <button
-              key={cat}
-              onClick={() => setActiveFilter(cat)}
+              key={tab}
+              onClick={() => setActiveTab(tab)}
               className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
-                activeFilter === cat
+                activeTab === tab
                   ? "gradient-btn text-white shadow-md scale-105"
                   : "bg-gray-100 text-gray-600 hover:bg-gray-200"
               }`}
             >
-              {cat}
+              {tab}
             </button>
           ))}
         </div>
       </section>
 
-      {/* Reel Cards Grid */}
-      <section className="px-4 pb-24">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-            {filtered.map((reel, i) => (
-              <button
-                key={`${reel.client}-${reel.videoId}`}
-                onClick={() => setActiveVideo(reel)}
-                className="group relative rounded-2xl overflow-hidden cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-purple/60"
-                style={{ animationDelay: `${(i % 6) * 60}ms` }}
-              >
-                {/* 9:16 card */}
-                <div className="relative w-full" style={{ paddingBottom: "177.78%" }}>
-                  {/* Gradient background */}
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-br ${
-                      categoryGradients[reel.category] ?? "from-gray-500 to-gray-700"
-                    }`}
-                  />
+      {/* Sections */}
+      <section className="px-4 pb-24 space-y-14">
+        <div className="max-w-7xl mx-auto space-y-14">
 
-                  {/* Noise texture overlay */}
-                  <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJub2lzZSI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuNjUiIG51bU9jdGF2ZXM9IjMiIHN0aXRjaFRpbGVzPSJzdGl0Y2giLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsdGVyPSJ1cmwoI25vaXNlKSIgb3BhY2l0eT0iMSIvPjwvc3ZnPg==')]" />
-
-                  {/* Play icon — center */}
-                  <div className="absolute inset-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-                    <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/30 group-hover:bg-white/30 transition-colors duration-200">
-                      <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
-                    </div>
-                  </div>
-
-                  {/* Hover overlay */}
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-end pb-5 px-3">
-                    <span className="text-white text-xs font-bold tracking-wide uppercase">Watch Reel</span>
-                  </div>
-
-                  {/* Bottom label */}
-                  <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/60 to-transparent">
-                    <span
-                      className={`inline-block text-[9px] font-semibold px-2 py-0.5 rounded-full mb-1 ${
-                        categoryAccent[reel.category] ?? "bg-white/20 text-white"
-                      }`}
-                    >
-                      {reel.category}
-                    </span>
-                    <p className="text-white text-[11px] font-semibold leading-tight truncate">{reel.client}</p>
-                  </div>
-                </div>
-              </button>
-            ))}
-          </div>
-
-          {filtered.length === 0 && (
-            <p className="text-center text-gray-400 py-20">No reels in this category yet.</p>
+          {/* ── Reels ── */}
+          {show("Reels") && (
+            <div>
+              <SectionHeading
+                label="Reels"
+                accent="bg-purple-100"
+                icon={
+                  <svg className="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                }
+              />
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+                {reelsData.map((item, i) => (
+                  <ReelCard key={i} item={item} onPlay={setActiveVideo} />
+                ))}
+              </div>
+            </div>
           )}
+
+          {/* ── Podcasts ── */}
+          {show("Podcasts") && (
+            <div>
+              <SectionHeading
+                label="Podcasts"
+                accent="bg-pink-100"
+                icon={
+                  <svg className="w-4 h-4 text-pink-600" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
+                  </svg>
+                }
+              />
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {podcastsData.map((item, i) => (
+                  <PodcastCard key={i} item={item} onPlay={setActiveVideo} />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* ── Posters ── */}
+          {show("Posters") && (
+            <div>
+              <SectionHeading
+                label="Posters"
+                accent="bg-amber-100"
+                icon={
+                  <svg className="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3 3h18M3 21h18" />
+                  </svg>
+                }
+              />
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+                {postersData.map((item, i) => (
+                  <PosterCard key={i} item={item} />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* ── Carousels ── */}
+          {show("Carousels") && (
+            <div>
+              <SectionHeading
+                label="Carousels"
+                accent="bg-teal-100"
+                icon={
+                  <svg className="w-4 h-4 text-teal-600" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+                  </svg>
+                }
+              />
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {carouselData.map((item, i) => (
+                  <CarouselCard key={i} item={item} />
+                ))}
+              </div>
+            </div>
+          )}
+
         </div>
       </section>
 
-      {/* Lightbox Modal */}
-      {activeVideo && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm px-4"
-          onClick={() => setActiveVideo(null)}
-        >
-          <div
-            className="relative w-full max-w-sm"
-            style={{ paddingBottom: "0" }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Close */}
-            <button
-              onClick={() => setActiveVideo(null)}
-              className="absolute -top-10 right-0 text-white/70 hover:text-white transition-colors text-sm flex items-center gap-1.5 z-10"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-              Close
-            </button>
-
-            {/* Meta */}
-            <div className="mb-3 flex items-center gap-2">
-              <span
-                className={`text-xs font-semibold px-2.5 py-1 rounded-full ${
-                  categoryAccent[activeVideo.category] ?? "bg-white/20 text-white"
-                }`}
-              >
-                {activeVideo.category}
-              </span>
-              <span className="text-white font-semibold text-sm">{activeVideo.client}</span>
-            </div>
-
-            {/* 9:16 iframe */}
-            <div className="relative w-full rounded-2xl overflow-hidden" style={{ paddingBottom: "177.78%" }}>
-              <iframe
-                src={`https://www.youtube.com/embed/${activeVideo.videoId}?autoplay=1&rel=0`}
-                title={`${activeVideo.client} — ${activeVideo.category}`}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="absolute inset-0 w-full h-full"
-              />
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Lightbox */}
+      {activeVideo && <Lightbox video={activeVideo} onClose={() => setActiveVideo(null)} />}
 
       {/* CTA */}
       <section className="py-16 px-4 bg-gray-50/50">
@@ -202,16 +450,10 @@ export default function OurWorkClient() {
                 Book a free strategy call and let&apos;s build your success story next.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Link
-                  href="/book-call"
-                  className="bg-white text-purple font-semibold px-8 py-3.5 rounded-full text-base hover:bg-gray-50 transition-colors shadow-lg"
-                >
+                <Link href="/book-call" className="bg-white text-purple font-semibold px-8 py-3.5 rounded-full text-base hover:bg-gray-50 transition-colors shadow-lg">
                   Book a Free Call
                 </Link>
-                <Link
-                  href="/services"
-                  className="border-2 border-white/30 text-white font-semibold px-8 py-3.5 rounded-full text-base hover:bg-white/10 transition-colors"
-                >
+                <Link href="/services" className="border-2 border-white/30 text-white font-semibold px-8 py-3.5 rounded-full text-base hover:bg-white/10 transition-colors">
                   View Services
                 </Link>
               </div>
