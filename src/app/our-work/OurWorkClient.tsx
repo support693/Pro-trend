@@ -5,34 +5,34 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 
 const reels = [
-  { client: "Arrow Plus", category: "Social Media", videoId: "YOUTUBE_VIDEO_ID_1" },
-  { client: "Askans Architecture", category: "Content", videoId: "YOUTUBE_VIDEO_ID_2" },
-  { client: "ETA's Cars", category: "Google Ads", videoId: "YOUTUBE_VIDEO_ID_3" },
-  { client: "Lazaro Tailorshop", category: "Reels", videoId: "YOUTUBE_VIDEO_ID_4" },
-  { client: "Vanavil Farms", category: "Social Media", videoId: "YOUTUBE_VIDEO_ID_5" },
-  { client: "Frames & Fusion", category: "Content", videoId: "YOUTUBE_VIDEO_ID_6" },
-  { client: "Landmark Pallavaa", category: "Reels", videoId: "YOUTUBE_VIDEO_ID_7" },
-  { client: "Arrow Plus", category: "Reels", videoId: "YOUTUBE_VIDEO_ID_8" },
-  { client: "ETA's Cars", category: "Content", videoId: "YOUTUBE_VIDEO_ID_9" },
-  { client: "Lazaro Tailorshop", category: "Social Media", videoId: "YOUTUBE_VIDEO_ID_10" },
-  { client: "Vanavil Farms", category: "Reels", videoId: "YOUTUBE_VIDEO_ID_11" },
-  { client: "Askans Architecture", category: "Content", videoId: "YOUTUBE_VIDEO_ID_12" },
+  { client: "Arrow Plus", category: "Reels", videoId: "YOUTUBE_VIDEO_ID_1" },
+  { client: "Askans Architecture", category: "Posters", videoId: "YOUTUBE_VIDEO_ID_2" },
+  { client: "ETA's Cars", category: "Podcasts", videoId: "YOUTUBE_VIDEO_ID_3" },
+  { client: "Lazaro Tailorshop", category: "Carousels", videoId: "YOUTUBE_VIDEO_ID_4" },
+  { client: "Vanavil Farms", category: "Reels", videoId: "YOUTUBE_VIDEO_ID_5" },
+  { client: "Frames & Fusion", category: "Posters", videoId: "YOUTUBE_VIDEO_ID_6" },
+  { client: "Landmark Pallavaa", category: "Carousels", videoId: "YOUTUBE_VIDEO_ID_7" },
+  { client: "Arrow Plus", category: "Podcasts", videoId: "YOUTUBE_VIDEO_ID_8" },
+  { client: "ETA's Cars", category: "Reels", videoId: "YOUTUBE_VIDEO_ID_9" },
+  { client: "Lazaro Tailorshop", category: "Posters", videoId: "YOUTUBE_VIDEO_ID_10" },
+  { client: "Vanavil Farms", category: "Carousels", videoId: "YOUTUBE_VIDEO_ID_11" },
+  { client: "Askans Architecture", category: "Podcasts", videoId: "YOUTUBE_VIDEO_ID_12" },
 ];
 
-const categories = ["All", "Social Media", "Reels", "Content", "Google Ads"];
+const categories = ["All", "Reels", "Podcasts", "Posters", "Carousels"];
 
 const categoryGradients: Record<string, string> = {
-  "Social Media": "from-purple-600 via-purple-500 to-violet-400",
-  "Reels": "from-teal-500 via-emerald-400 to-cyan-400",
-  "Content": "from-indigo-500 via-blue-400 to-sky-400",
-  "Google Ads": "from-orange-500 via-amber-400 to-yellow-400",
+  "Reels": "from-purple-600 via-purple-500 to-violet-400",
+  "Podcasts": "from-rose-500 via-pink-400 to-fuchsia-400",
+  "Posters": "from-amber-500 via-orange-400 to-yellow-400",
+  "Carousels": "from-teal-500 via-emerald-400 to-cyan-400",
 };
 
 const categoryAccent: Record<string, string> = {
-  "Social Media": "bg-purple-100 text-purple-700",
-  "Reels": "bg-teal-100 text-teal-700",
-  "Content": "bg-blue-100 text-blue-700",
-  "Google Ads": "bg-orange-100 text-orange-700",
+  "Reels": "bg-purple-100 text-purple-700",
+  "Podcasts": "bg-pink-100 text-pink-700",
+  "Posters": "bg-amber-100 text-amber-700",
+  "Carousels": "bg-teal-100 text-teal-700",
 };
 
 export default function OurWorkClient() {
