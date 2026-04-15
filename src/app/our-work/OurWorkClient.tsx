@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
@@ -206,9 +206,28 @@ function PosterCard({ item, onOpen }: { item: (typeof postersData)[0]; onOpen: (
 function CarouselCard({ item }: { item: (typeof carouselData)[0] }) {
   const [active, setActive] = useState(0);
   const total = item.slides.length;
+  const touchStartX = useRef<number | null>(null);
+
+  function handleTouchStart(e: React.TouchEvent) {
+    touchStartX.current = e.touches[0].clientX;
+  }
+  function handleTouchEnd(e: React.TouchEvent) {
+    if (touchStartX.current === null) return;
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) {
+      setActive((p) => diff > 0 ? (p + 1) % total : (p - 1 + total) % total);
+    }
+    touchStartX.current = null;
+  }
+
   return (
     <div className="group relative rounded-2xl overflow-hidden w-full">
-      <div className="relative w-full" style={{ paddingBottom: "100%" }}>
+      <div
+        className="relative w-full"
+        style={{ paddingBottom: "100%" }}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
         <Image
           src={item.slides[active]}
           alt={`${item.client} slide ${active + 1}`}
@@ -216,7 +235,7 @@ function CarouselCard({ item }: { item: (typeof carouselData)[0] }) {
           className="object-cover transition-opacity duration-300"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
         />
-        <div className="absolute inset-0 flex items-center justify-between px-2 opacity-0 group-hover:opacity-100 transition-opacity">
+        <div className="absolute inset-0 flex items-center justify-between px-2">
           <button
             onClick={() => setActive((p) => (p - 1 + total) % total)}
             className="w-7 h-7 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center shadow text-gray-700 hover:bg-white transition-colors"
