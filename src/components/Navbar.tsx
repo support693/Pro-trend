@@ -19,6 +19,7 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-8">
           <Link href="/" className="text-purple font-medium text-sm">Home</Link>
           <Link href="/services" className="text-gray-500 hover:text-purple transition-colors text-sm">Services</Link>
+          <Link href="/our-work" className="text-gray-500 hover:text-purple transition-colors text-sm">Our Work</Link>
           <Link href="/contact" className="text-gray-500 hover:text-purple transition-colors text-sm">Contact</Link>
         </div>
 
@@ -53,6 +54,7 @@ export default function Navbar() {
         <div className="md:hidden fixed inset-0 top-[72px] bg-white/95 backdrop-blur-md flex flex-col items-center justify-start pt-12 gap-8 text-lg z-40">
           <Link href="/" onClick={() => setMenuOpen(false)} className="text-purple font-medium">Home</Link>
           <Link href="/services" onClick={() => setMenuOpen(false)} className="text-gray-600 hover:text-purple">Services</Link>
+          <Link href="/our-work" onClick={() => setMenuOpen(false)} className="text-gray-600 hover:text-purple">Our Work</Link>
           <Link href="/contact" onClick={() => setMenuOpen(false)} className="text-gray-600 hover:text-purple">Contact</Link>
           <Link
             href="/book-call"
