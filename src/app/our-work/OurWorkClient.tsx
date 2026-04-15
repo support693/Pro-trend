@@ -11,6 +11,12 @@ const reelsData = [
   { client: "Pro Trend Reel", videoId: "sCONGS2eHhk" },
 ];
 
+const podcastsData = [
+  { client: "Podcast Episode 1", videoId: "4dMBMaH8SYY" },
+  { client: "Podcast Episode 2", videoId: "UmhACk28YJU" },
+  { client: "Podcast Episode 3", videoId: "veYo-_e12Gg" },
+];
+
 const postersData = [
   { client: "Client Poster 1",   src: "/works/posters/poster-1.png"        },
   { client: "Client Poster 2",   src: "/works/posters/poster-2.png"        },
@@ -45,7 +51,7 @@ const carouselData = [
 
 /* ─── Filter tabs ───────────────────────────────────────── */
 
-const TABS = ["All", "Reels", "Posters", "Carousels"] as const;
+const TABS = ["All", "Reels", "Podcasts", "Posters", "Carousels"] as const;
 type Tab = (typeof TABS)[number];
 
 /* ─── Section heading ───────────────────────────────────── */
@@ -76,6 +82,28 @@ function ReelCard({ item }: { item: (typeof reelsData)[0] }) {
       </div>
       <div className="p-2.5">
         <span className="inline-block text-[9px] font-semibold px-2 py-0.5 rounded-full mb-1 bg-purple-100 text-purple-700">Reel</span>
+        <p className="text-xs font-semibold text-gray-800 truncate">{item.client}</p>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Podcast card — 16:9 YouTube embed ────────────────── */
+
+function PodcastCard({ item }: { item: (typeof podcastsData)[0] }) {
+  return (
+    <div className="relative rounded-2xl overflow-hidden w-full">
+      <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+        <iframe
+          src={`https://www.youtube.com/embed/${item.videoId}?rel=0`}
+          title={item.client}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          className="absolute inset-0 w-full h-full"
+        />
+      </div>
+      <div className="p-2.5">
+        <span className="inline-block text-[9px] font-semibold px-2 py-0.5 rounded-full mb-1 bg-pink-100 text-pink-700">Podcast</span>
         <p className="text-xs font-semibold text-gray-800 truncate">{item.client}</p>
       </div>
     </div>
@@ -266,6 +294,26 @@ export default function OurWorkClient() {
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
                 {reelsData.map((item, i) => (
                   <ReelCard key={i} item={item} />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Podcasts */}
+          {show("Podcasts") && (
+            <div>
+              <SectionHeading
+                label="Podcasts"
+                accent="bg-pink-100"
+                icon={
+                  <svg className="w-4 h-4 text-pink-600" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
+                  </svg>
+                }
+              />
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {podcastsData.map((item, i) => (
+                  <PodcastCard key={i} item={item} />
                 ))}
               </div>
             </div>
